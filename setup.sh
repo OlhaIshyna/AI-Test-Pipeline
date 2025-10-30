@@ -23,7 +23,7 @@ echo ""
 
 # Install dependencies
 echo "Installing Python dependencies..."
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 echo "Dependencies installed ✓"
 echo ""
 
@@ -44,15 +44,34 @@ fi
 
 # Validate configuration files
 echo "Validating configuration files..."
-python3 -c "import yaml, json; yaml.safe_load(open('ai-tests/ai-test-config.yaml')); json.load(open('ai-tests/datasets/language-dataset.json')); print('Configuration files are valid ✓')"
+if python3 -c "import yaml; yaml.safe_load(open('ai-tests/ai-test-config.yaml'))" 2>/dev/null; then
+    echo "  ai-test-config.yaml is valid ✓"
+else
+    echo "  ❌ Error: ai-test-config.yaml is invalid or missing"
+    exit 1
+fi
+
+if python3 -c "import json; json.load(open('ai-tests/datasets/language-dataset.json'))" 2>/dev/null; then
+    echo "  language-dataset.json is valid ✓"
+else
+    echo "  ❌ Error: language-dataset.json is invalid or missing"
+    exit 1
+fi
 echo ""
 
 # Check deployment name
 echo "Checking Azure OpenAI deployment configuration..."
-DEPLOYMENT_NAME=$(python3 -c "import yaml; print(yaml.safe_load(open('ai-tests/ai-test-config.yaml'))['azure_openai']['deployment_name'])")
-echo "Deployment name: $DEPLOYMENT_NAME"
+if DEPLOYMENT_NAME=$(python3 -c "import yaml; config = yaml.safe_load(open('ai-tests/ai-test-config.yaml')); print(config.get('azure_openai', {}).get('deployment_name', 'NOT_SET'))" 2>/dev/null); then
+    if [ "$DEPLOYMENT_NAME" = "NOT_SET" ]; then
+        echo "  ⚠️  Warning: Deployment name not found in configuration"
+    else
+        echo "  Deployment name: $DEPLOYMENT_NAME"
+    fi
+else
+    echo "  ⚠️  Warning: Could not read deployment name from configuration"
+fi
 echo ""
-echo "⚠️  Make sure this matches your Azure OpenAI deployment name."
+echo "⚠️  Make sure the deployment name matches your Azure OpenAI deployment."
 echo "   Update it in ai-tests/ai-test-config.yaml if needed."
 echo ""
 
