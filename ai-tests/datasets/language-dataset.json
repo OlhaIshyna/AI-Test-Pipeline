@@ -1,0 +1,29 @@
+{
+  "test_cases": 
+[
+  {
+    "id": "test_001",
+    "name": "Switzerland Zurich Language Test",
+    "input": { "location": "Switzerland, Zurich" },
+    "expected_output": { "contains": ["German", "French"] }
+  },
+  {
+    "id": "test_002",
+    "name": "Toronto Canada Language Test",
+    "input": { "location": "Toronto, Canada" },
+    "expected_output": { "contains": ["English"] }
+  },
+  {
+    "id": "test_003",
+    "name": "Montreal Canada Language Test",
+    "input": { "location": "Canada, Montreal" },
+    "expected_output": { "contains": ["French"] }
+  }
+]
+,
+  "metadata": {
+    "version": "1.0",
+    "description": "Dataset for testing language recommendations based on client location",
+    "date_created": "2025-10-30"
+  }
+}

@@ -1,0 +1,53 @@
+name: AI Test Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    # Allows manual trigger from Actions tab
+
+jobs:
+  ai-tests:
+    name: Run AI Tests
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run AI Tests
+      env:
+        AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+      run: |
+        cd ai-tests
+        python run_tests.py
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: ai-test-results
+        path: ai-tests/test-results.json
+    
+    - name: Display results
+      if: always()
+      run: |
+        if [ -f ai-tests/test-results.json ]; then
+          echo "Test Results:"
+          cat ai-tests/test-results.json
+        fi
