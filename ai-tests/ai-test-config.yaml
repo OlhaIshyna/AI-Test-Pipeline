@@ -1,0 +1,56 @@
+name: Language Recommendation AI Test
+version: 1.0
+description: Test suite for validating AI language recommendations based on client location
+
+azure_openai:
+  endpoint: https://olhaopenai.openai.azure.com/
+  api_version: "2024-02-15-preview"
+  deployment_name: gpt-4  # Update with your actual deployment name
+  
+prompt:
+  template_file: prompts/language-recommendation.txt
+  variables:
+    - location
+
+dataset:
+  file: datasets/language-dataset.json
+  
+test_cases:
+  - id: test_001
+    name: Switzerland Zurich Language Test
+    input:
+      location: "Switzerland, Zurich"
+    expected_output:
+      contains:
+        - "German"
+      validation_type: primary_language
+      
+  - id: test_002
+    name: Toronto Canada Language Test
+    input:
+      location: "Toronto, Canada"
+    expected_output:
+      contains:
+        - "English"
+      validation_type: primary_language
+      
+  - id: test_003
+    name: Montreal Canada Language Test
+    input:
+      location: "Canada, Montreal"
+    expected_output:
+      contains:
+        - "French"
+      validation_type: primary_language
+
+validation:
+  criteria:
+    - check_primary_language: true
+    - response_length_min: 10
+    - response_length_max: 500
+    - response_time_max_seconds: 30
+  
+reporting:
+  format: json
+  output_file: test-results.json
+  verbose: true

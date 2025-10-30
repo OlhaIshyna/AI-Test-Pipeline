@@ -1,0 +1,30 @@
+{
+  "test_cases": [
+    {
+      "id": "test_001",
+      "location": "Switzerland, Zurich",
+      "expected_primary_language": "German",
+      "expected_secondary_languages": ["English", "French"],
+      "description": "Zurich is in the German-speaking region of Switzerland"
+    },
+    {
+      "id": "test_002",
+      "location": "Toronto, Canada",
+      "expected_primary_language": "English",
+      "expected_secondary_languages": ["French"],
+      "description": "Toronto is primarily English-speaking"
+    },
+    {
+      "id": "test_003",
+      "location": "Canada, Montreal",
+      "expected_primary_language": "French",
+      "expected_secondary_languages": ["English"],
+      "description": "Montreal is primarily French-speaking"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "description": "Dataset for testing language recommendations based on client location",
+    "date_created": "2025-10-30"
+  }
+}
