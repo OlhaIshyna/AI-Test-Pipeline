@@ -5,7 +5,7 @@ description: Test suite for validating AI language recommendations based on clie
 azure_openai:
   endpoint: https://olhaopenai.openai.azure.com/
   api_version: "2024-02-15-preview"
-  deployment_name: OlhaOpenAI  # Update with your actual deployment name
+  deployment_name: OpenAICreate-20251030143258  # Update with your actual deployment name
   
 prompt:
   template_file: prompts/language-recommendation.txt
