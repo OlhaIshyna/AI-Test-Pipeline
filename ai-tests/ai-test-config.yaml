@@ -4,9 +4,9 @@ description: Test suite for validating AI language recommendations based on clie
 
 azure_openai:
   endpoint: https://olhaopenai.openai.azure.com/
-  api_version: "2024-02-15-preview"
-  deployment_name: "OpenAICreate-20251030143258"  # Update with your actual deployment name
-  
+  api_version: "2024-05-01-preview"
+  deployment_name: "OpenAICreate-20251030143258"
+
 prompt:
   template_file: prompts/language-recommendation.txt
   variables:
@@ -14,7 +14,7 @@ prompt:
 
 dataset:
   file: datasets/language-dataset.json
-  
+
 test_cases:
   - id: test_001
     name: Switzerland Zurich Language Test
@@ -24,7 +24,7 @@ test_cases:
       contains:
         - "German"
       validation_type: primary_language
-      
+
   - id: test_002
     name: Toronto Canada Language Test
     input:
@@ -33,7 +33,7 @@ test_cases:
       contains:
         - "English"
       validation_type: primary_language
-      
+
   - id: test_003
     name: Montreal Canada Language Test
     input:
@@ -49,7 +49,7 @@ validation:
     - response_length_min: 10
     - response_length_max: 500
     - response_time_max_seconds: 30
-  
+
 reporting:
   format: json
   output_file: test-results.json
