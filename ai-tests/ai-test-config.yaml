@@ -3,7 +3,7 @@ version: 1.0
 description: Test suite for validating AI language recommendations based on client location
 
 azure_openai:
-  endpoint: https://olhaopenai.openai.azure.com/
+  endpoint: https://vopenai.openai.azure.com/
   api_version: "2024-05-01-preview"
   deployment_name: gpt-4o
 
