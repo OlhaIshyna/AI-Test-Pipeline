@@ -61,7 +61,8 @@ echo ""
 
 # Check deployment name
 echo "Checking Azure OpenAI deployment configuration..."
-if DEPLOYMENT_NAME=$(python3 -c "import yaml; config = yaml.safe_load(open('ai-tests/ai-test-config.yaml')); print(config.get('azure_openai', {}).get('deployment_name', 'NOT_SET'))" 2>/dev/null); then
+GET_DEPLOYMENT_CMD='import yaml; config = yaml.safe_load(open("ai-tests/ai-test-config.yaml")); print(config.get("azure_openai", {}).get("deployment_name", "NOT_SET"))'
+if DEPLOYMENT_NAME=$(python3 -c "$GET_DEPLOYMENT_CMD" 2>/dev/null); then
     if [ "$DEPLOYMENT_NAME" = "NOT_SET" ]; then
         echo "  ⚠️  Warning: Deployment name not found in configuration"
     else
